@@ -71,13 +71,22 @@ class MiniWxForm  extends Model
     /**
      * @var string 小程序的appid
      */
-    public $appid = 'wx9b5c295fee9202b5';
+    public $appid = '';
 
     /**
      * @var string 小程序的 secret
      */
-    public $secret = '871fbddfe02c1045bdc647a1897f3d36';
+    public $secret = '';
 
+
+    public function init()
+    {
+        parent::init();
+
+        // Retrieve appid and secret from configuration
+        $this->appid = \Yii::$app->params['wechat']['appid'];
+        $this->secret = \Yii::$app->params['wechat']['secret'];
+    }
 
     public function rules()
     {
