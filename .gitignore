@@ -1,0 +1,59 @@
+# yii console commands
+/yii
+/yii_test
+/yii_test.bat
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# 忽略运行时和临时文件
+/runtime/
+web/assets/
+/vendor
+/node_modules/
+
+# composer itself is not needed
+# composer.phar
+
+# 忽略IDE和操作系统文件
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+# vagrant runtime
+/.vagrant
+
+# ignore generated files
+/frontend/web/index.php
+/frontend/web/index-test.php
+/frontend/web/robots.txt
+/backend/web/index.php
+/backend/web/index-test.php
+/backend/web/robots.txt
+
+# 忽略日志和备份文件
+*.log
+*.sql
+
+# 编译文件
+*.phar
+*.class
+
+# 忽略配置文件
+/environments/*
+config/
+
