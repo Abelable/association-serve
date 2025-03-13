@@ -7,6 +7,7 @@ namespace api\modules\v1\forms;
 use common\models\common\ClassRoom;
 use common\models\common\Legal;
 use common\models\common\Legal1;
+use common\models\common\OpenInfo;
 use common\models\common\WisdomLibrary;
 use yii\base\Model;
 
@@ -54,6 +55,7 @@ class SearchForm extends Model
         $classRoom = [];
         $legal = [];
         $wisdomLibrary = [];
+        $openInfo = [];
 
         switch ($this->type) {
             case 1:
@@ -65,10 +67,14 @@ class SearchForm extends Model
             case 3:
                 $wisdomLibrary = $this->getWisdomLibrary($this->word);
                 break;
+            case 4:
+                $openInfo = $this->getOpenInfo($this->word);
+                break;
             default:
                 $classRoom = $this->getClassRoom($this->word);
                 $legal = $this->getLegal($this->word);
                 $wisdomLibrary = $this->getWisdomLibrary($this->word);
+                $openInfo = $this->getOpenInfo($this->word);
         }
 
 
@@ -76,6 +82,7 @@ class SearchForm extends Model
             'class_room' => $classRoom,
             'legal' => $legal,
             'wisdom_library' => $wisdomLibrary,
+            'open_info' => $openInfo,
         ];
     }
 
@@ -91,6 +98,7 @@ class SearchForm extends Model
         $classRoom = [];
         $legal = [];
         $wisdomLibrary = [];
+        $openInfo = [];
 
         switch ($this->type) {
             case 1:
@@ -102,10 +110,14 @@ class SearchForm extends Model
             case 3:
                 $wisdomLibrary = $this->getWisdomLibrary($this->word);
                 break;
+            case 4:
+                $openInfo = $this->getOpenInfo($this->word);
+                break;
             default:
                 $classRoom = $this->getClassRoom($this->word);
                 $legal = $this->getLegal1($this->word);
                 $wisdomLibrary = $this->getWisdomLibrary($this->word);
+                $openInfo = $this->getOpenInfo($this->word);
         }
 
 
@@ -113,6 +125,7 @@ class SearchForm extends Model
             'class_room' => $classRoom,
             'legal' => $legal,
             'wisdom_library' => $wisdomLibrary,
+            'open_info' => $openInfo,
         ];
     }
 
@@ -164,6 +177,19 @@ class SearchForm extends Model
         return WisdomLibrary::find()
             ->where(['status' => 1])
             ->andFilterWhere(['or',['like','name',$word], ['like','field',$word]])
+            ->asArray()
+            ->all();
+    }
+
+    /**
+     * 公开信息搜索
+     * @param $word
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getOpenInfo($word) {
+        return OpenInfo::find()
+            ->where(['status' => 1])
+            ->andFilterWhere(['like','title',$word])
             ->asArray()
             ->all();
     }

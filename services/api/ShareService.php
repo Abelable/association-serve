@@ -11,6 +11,7 @@ use common\models\common\Attachment;
 use common\models\common\ClassRoom;
 use common\models\common\Legal;
 use common\models\common\Legal1;
+use common\models\common\OpenInfo;
 use common\models\common\WisdomLibrary;
 use EasyWeChat\Factory;
 
@@ -36,6 +37,11 @@ class ShareService extends Service
                 break;
             case 4:
                 $method = [$obj,'getClassRoom'];
+                $params['user_id'] = $userId;
+                $paramArr = [$params];
+                break;
+            case 5:
+                $method = [$obj,'getOpenInfo'];
                 $params['user_id'] = $userId;
                 $paramArr = [$params];
                 break;
@@ -153,6 +159,28 @@ class ShareService extends Service
             'mini_app_id'    => \Yii::$app->params['wechatMiniProgramConfig']['app_id'],
             'mini_app_path'  => $miniAppPath,
             'app_code' => $this->getUnlimited($params['class_room_id'],\Yii::$app->params['wechatMiniProgramConfig']['pages']['class_room']),
+            'share_type'     => [
+                'wechat_friends'       => false,
+                'wechat_moments'       => false,
+                'mini_program'         => true,
+                'mini_program_picture' => true,
+            ],
+        ];
+    }
+
+    public function getOpenInfo($params) {
+        $openInfo = OpenInfo::findOne(['id' => $params['open_info_id'],'status' => 1]);
+        $miniAppPath = sprintf('%s?open_info_id=%s',\Yii::$app->params['wechatMiniProgramConfig']['pages']['open_info'] , $params['open_info_id'] ?? '');
+        return [
+            'title'      => $openInfo->title ?? '',
+            'sub_title'   => $params['sub_title'] ?? '',
+            'content'   =>  $openInfo->content ?? '',
+            'cover_img' => $openInfo->cover,
+            'logo'           => 'https://img-gov.oss-cn-hangzhou.aliyuncs.com/logo.jpg',
+            'web_url'     => $params['h5_url'] ?? '',
+            'mini_app_id'    => \Yii::$app->params['wechatMiniProgramConfig']['app_id'],
+            'mini_app_path'  => $miniAppPath,
+            'app_code' => $this->getUnlimited($params['open_info_id'],\Yii::$app->params['wechatMiniProgramConfig']['pages']['open_info']),
             'share_type'     => [
                 'wechat_friends'       => false,
                 'wechat_moments'       => false,
