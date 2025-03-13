@@ -132,7 +132,7 @@ class OpenInfoController extends OnAuthController
             //更新收藏数
             $res = OpenInfo::updateAllCounters(['collects' => $collectNum], ['id' => $data['id']]);
             if(!$res) {
-                throw new \Exception('更新收藏点赞失败');
+                throw new \Exception('更新收藏数失败');
             }
             $tran->commit();
         }catch (\Exception $e) {
