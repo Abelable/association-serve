@@ -86,8 +86,8 @@ class OpenInfoController extends OnAuthController
             if(!$like->save()) {
                 throw new \Exception('更新点赞记录失败');
             }
-            //更新收藏数
-            $res = OpenInfoLike::updateAllCounters(['likes' => $likeNum], ['id' => $data['id']]);
+            //更新点赞数
+            $res = OpenInfo::updateAllCounters(['likes' => $likeNum], ['id' => $data['id']]);
             if(!$res) {
                 throw new \Exception('更新公开信息点赞失败');
             }
