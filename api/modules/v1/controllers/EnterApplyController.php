@@ -20,7 +20,7 @@ class EnterApplyController extends OnAuthController
      *
      * @var array
      */
-    protected $authOptional = ['apply','custom-event-detail','custom-event-apply'];
+    protected $authOptional = ['list', 'apply','custom-event-detail','custom-event-apply'];
 
     /**
      * @param $id
@@ -97,6 +97,20 @@ class EnterApplyController extends OnAuthController
         if (!$res = $EnterApplyForm->listApply()){
             return  ResultHelper::json('422',"查询失败",$EnterApplyForm->errors);
         }
+        return  ResultHelper::json('200',"success",$res);
+    }
+
+    /**
+     * 企业列表
+     * @return array|mixed
+     */
+    public function actionList() {
+        $form = new EnterApplyForm();
+        // 设置场景
+        $form->setScenario($form::SCENARIO_LIST);
+        $data = \Yii::$app->request->get();
+        $form->load($data,'');
+        $res = $form->list();
         return  ResultHelper::json('200',"success",$res);
     }
 

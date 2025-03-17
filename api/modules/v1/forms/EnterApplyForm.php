@@ -30,6 +30,11 @@ class EnterApplyForm extends Model
     const SCENARIO_APPLY_LIST = 'scenario_apply_list';
 
     /**
+     * 企业列表
+     */
+    const SCENARIO_LIST = 'scenario_list';
+
+    /**
      * 详情记录
      */
     const SCENARIO_APPLY_INFO = 'scenario_apply_info';
@@ -54,6 +59,11 @@ class EnterApplyForm extends Model
      * @var int 一页的数据
      */
     public $page_size = 20;
+
+    /**
+     * @var int 分类id
+     */
+    public $category_id;
 
     /**
      * @var int 报名表单id
@@ -160,6 +170,10 @@ class EnterApplyForm extends Model
             // 查询记录场景
             [['open_id'],'required','on'=>[static::SCENARIO_APPLY_LIST]],
             [['page','page_size'],'integer','on'=>[static::SCENARIO_APPLY_LIST]],
+
+            //列表
+            [['category_id'],'string','on'=>[static::SCENARIO_LIST]],
+            [['page','page_size'],'integer','on'=>[static::SCENARIO_LIST]],
 
             // 查询详情信息场景
             [['open_id','id'],'required','on'=>[static::SCENARIO_APPLY_INFO]],
@@ -343,51 +357,6 @@ class EnterApplyForm extends Model
 
     }
 
-
-    /**
-     * 更新入会申请记录信息
-     */
-    public function listApply(){
-        if (!$this->validate()) {
-            return false;
-        }
-
-        $FormApplyModel = FormApply::find()
-            ->where(['open_id'=>$this->open_id])
-            ->andWhere(['<>','status',FormApply::STATUS_DEL]);
-
-        $res['total'] = 0;
-        $res['page'] = $this->page;
-        $res['page_size'] = $this->page_size;
-        $res['list'] = [];
-
-        $res['total'] = $FormApplyModel->count();
-        $offset = ($this->page-1)*$this->page_size;
-        $FormApplys = $FormApplyModel->limit($this->page_size)->offset($offset)->all();
-
-        foreach ($FormApplys as $FormApply){
-            /**
-             * @var FormApply $FormApply
-             */
-            $res['list'][] = [
-                'id'=>$FormApply->id,
-                'title'=>$FormApply->title,
-                'created_at'=>$FormApply->created_at,
-                'name'=>$FormApply->name,
-                'mobile'=>$FormApply->mobile,
-                'email'=>$FormApply->email,
-                'is_deal'=>$FormApply->is_deal,
-                'company_name'=>$FormApply->company_name,
-                'reject_mark'=>$FormApply->reject_mark ? $FormApply->reject_mark  : '',
-                'number'=>$FormApply->number ? $FormApply->number  : '',
-                'url'=>$FormApply->url ? $FormApply->url  : '',
-                'certificate_status'=>$FormApply->certificate_status,
-            ];
-        }
-
-        return $res;
-    }
-
     /**
      * 入会申请详情信息
      */
@@ -512,5 +481,71 @@ class EnterApplyForm extends Model
         $res['enter_from_json'] = json_decode($res['enter_from_json'],true);
 
         return $res;
+    }
+
+    /**
+     * 更新入会申请记录信息
+     */
+    public function listApply(){
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $FormApplyModel = FormApply::find()
+            ->where(['open_id'=>$this->open_id])
+            ->andWhere(['<>','status',FormApply::STATUS_DEL]);
+
+        $res['total'] = 0;
+        $res['page'] = $this->page;
+        $res['page_size'] = $this->page_size;
+        $res['list'] = [];
+
+        $res['total'] = $FormApplyModel->count();
+        $offset = ($this->page-1)*$this->page_size;
+        $FormApplys = $FormApplyModel->limit($this->page_size)->offset($offset)->all();
+
+        foreach ($FormApplys as $FormApply){
+            /**
+             * @var FormApply $FormApply
+             */
+            $res['list'][] = [
+                'id'=>$FormApply->id,
+                'title'=>$FormApply->title,
+                'created_at'=>$FormApply->created_at,
+                'name'=>$FormApply->name,
+                'mobile'=>$FormApply->mobile,
+                'email'=>$FormApply->email,
+                'is_deal'=>$FormApply->is_deal,
+                'company_name'=>$FormApply->company_name,
+                'reject_mark'=>$FormApply->reject_mark ? $FormApply->reject_mark  : '',
+                'number'=>$FormApply->number ? $FormApply->number  : '',
+                'url'=>$FormApply->url ? $FormApply->url  : '',
+                'certificate_status'=>$FormApply->certificate_status,
+            ];
+        }
+
+        return $res;
+    }
+
+    /**
+     * 企业列表
+     * @return array|false|\yii\db\ActiveRecord[]
+     */
+    public function list() {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $query = FormApply::find()->where(['status' => 1]);
+        if ($this->category_id && $this->category_id != 0) {
+            $query->andFilterWhere(['category_id' => $this->category_id]);
+        }
+        $offset = ($this->page - 1) * $this->page_size;
+        $list = $query->orderBy(['created_at' => SORT_DESC])
+            ->offset($offset)
+            ->limit($this->page_size)
+            ->all();
+
+        return $list;
     }
 }
