@@ -114,6 +114,20 @@ class EnterApplyController extends OnAuthController
         return  ResultHelper::json('200',"success",$res);
     }
 
+    /**
+     * 企业详情
+     * @return array|mixed
+     */
+    public function actionDetail() {
+        $form = new EnterApplyForm();
+        // 设置场景
+        $form->setScenario($form::SCENARIO_DETAIL);
+        $data = \Yii::$app->request->get();
+        $form->load($data,'');
+        $res = $form->detail();
+        return  ResultHelper::json('200',"success",$res);
+    }
+
     public function actionInfoApply(){
         $EnterApplyForm = new EnterApplyForm();
         // 设置场景

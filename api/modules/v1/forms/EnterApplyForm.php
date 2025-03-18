@@ -35,6 +35,11 @@ class EnterApplyForm extends Model
     const SCENARIO_LIST = 'scenario_list';
 
     /**
+     * 企业详情
+     */
+    const SCENARIO_DETAIL = 'scenario_detail';
+
+    /**
      * 详情记录
      */
     const SCENARIO_APPLY_INFO = 'scenario_apply_info';
@@ -171,9 +176,13 @@ class EnterApplyForm extends Model
             [['open_id'],'required','on'=>[static::SCENARIO_APPLY_LIST]],
             [['page','page_size'],'integer','on'=>[static::SCENARIO_APPLY_LIST]],
 
-            //列表
+            // 企业列表
             [['category_id', 'company_name'],'string','on'=>[static::SCENARIO_LIST]],
             [['page','page_size'],'integer','on'=>[static::SCENARIO_LIST]],
+
+            // 企业详情
+            [['id'],'required','on'=>[static::SCENARIO_DETAIL]],
+            [['id'],'integer','on'=>[static::SCENARIO_DETAIL]],
 
             // 查询详情信息场景
             [['open_id','id'],'required','on'=>[static::SCENARIO_APPLY_INFO]],
@@ -550,5 +559,22 @@ class EnterApplyForm extends Model
             ->all();
 
         return $list;
+    }
+
+    /**
+     * 企业详情
+     * @return array|false
+     */
+    public function detail() {
+        if(!$this->validate()) {
+            return false;
+        }
+
+        /**
+         * @var FormApply $formApply
+         */
+        return FormApply::find()
+            ->where(['status' => 1, 'id' => $this->id])
+            ->one();
     }
 }
