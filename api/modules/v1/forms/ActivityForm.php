@@ -52,6 +52,9 @@ class ActivityForm extends Model
         $query = CustomEventForm::find()
             ->where(['status' => 1])
             ->andFilterWhere(['like','title',$this->title]);
+        if ($this->category_id && $this->category_id != 0) {
+            $query->andFilterWhere(['category_id' => $this->category_id]);
+        }
         $offset = ($this->page - 1) * $this->page_size;
         $res['page'] = $this->page;
         $res['page_size'] = $this->page_size;

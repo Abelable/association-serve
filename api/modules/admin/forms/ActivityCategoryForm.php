@@ -18,6 +18,11 @@ class ActivityCategoryForm extends Model
     const SCENARIO_ACTIVITY_CATEGORY_LIST = 'activity_category_list';
 
     /**
+     * 分类列表
+     */
+    const SCENARIO_ACTIVITY_CATEGORY_OPTIONS = 'activity_category_options';
+
+    /**
      * @var string 名称
      */
     public $name;
@@ -54,6 +59,9 @@ class ActivityCategoryForm extends Model
 
             // 分类列表
             [['name'], 'string', 'on' => [self::SCENARIO_ACTIVITY_CATEGORY_LIST]],
+
+            // 分类选项
+            [['name'], 'string', 'on' => [self::SCENARIO_ACTIVITY_CATEGORY_OPTIONS]],
         ];
     }
 
@@ -104,5 +112,15 @@ class ActivityCategoryForm extends Model
 
         $res['list'] = $list;
         return $res;
+    }
+
+    public function categoryOptions() {
+        if (!$this->validate()){
+            return false;
+        }
+        return ActivityCategory::find()
+            ->where(['status' => 1])
+            ->orderBy(['sort' => SORT_DESC,'id' => SORT_DESC])
+            ->all();
     }
 }

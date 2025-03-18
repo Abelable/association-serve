@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "gm_custom_event_form".
  *
  * @property int $id
+ * @property int $category_id 分类id
+ * @property string $cover 封面
  * @property string $title 标题
  * @property int $enter_num 报名人数限制
  * @property int $registered_num 已报名人数
@@ -57,6 +59,8 @@ class CustomEventForm extends \common\models\base\BaseModel
     {
         return [
             'id' => 'ID',
+            'category_id' => 'Category ID',
+            'cover' => 'Cover',
             'title' => 'Title',
             'enter_num' => 'Enter Num',
             'registered_num' => 'Registered Num',

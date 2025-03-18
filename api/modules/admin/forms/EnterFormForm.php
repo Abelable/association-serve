@@ -13,7 +13,6 @@ use yii\base\Model;
  * Date: 2021/8/12
  * Time: 12:37 下午
  */
-
 class EnterFormForm extends Model
 {
 
@@ -74,6 +73,16 @@ class EnterFormForm extends Model
      * 自定义活动报名导出
      */
     const SCENARIO_REGISTERED_EXPORT = 'scenario_registered_export';
+
+    /**
+     * @var int 分类id
+     */
+    public $category_id;
+
+    /**
+     * @var string 报名表单封面
+     */
+    public $cover = '';
 
     /**
      * @var string 报名表单标题
@@ -191,8 +200,8 @@ class EnterFormForm extends Model
 
             // 创建自定义活动
             [['title','enter_num','enter_from_json','remark','start_time','end_time'],'required','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
-            [['id','enter_num','status'],'integer','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
-            [['title','remark','start_time','end_time'],'string','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
+            [['id', 'category_id', 'enter_num','status'],'integer','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
+            [['cover','title','remark','start_time','end_time'],'string','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
             [['title','remark'], 'filter', 'filter' => 'trim','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
             //['start_time', 'compare', 'compareAttribute' => 'end_time', 'operator' => '<','on'=>[static::SCENARIO_CUSTOM_EVENT_SAVE]],
 
@@ -396,6 +405,8 @@ class EnterFormForm extends Model
             $model->status = $this->status;
         }
 
+        $model->cover = $this->cover ?? '';
+        $model->category_id = $this->category_id ?? 0;
         $model->title = $this->title;
         $model->enter_from_json = json_encode($this->enter_from_json,JSON_UNESCAPED_UNICODE);
         $model->enter_num = $this->enter_num;
