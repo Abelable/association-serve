@@ -18,6 +18,11 @@ class EnterpriseCategoryForm extends Model
     const SCENARIO_ENTERPRISE_CATEGORY_LIST = 'enterprise_category_list';
 
     /**
+     * 分类选项
+     */
+    const SCENARIO_ENTERPRISE_CATEGORY_OPTIONS = 'enterprise_category_options';
+
+    /**
      * @var string 名称
      */
     public $name;
@@ -54,6 +59,9 @@ class EnterpriseCategoryForm extends Model
 
             // 分类列表
             [['name'], 'string', 'on' => [self::SCENARIO_ENTERPRISE_CATEGORY_LIST]],
+
+            // 分类选项
+            [['name'], 'string', 'on' => [self::SCENARIO_ENTERPRISE_CATEGORY_OPTIONS]],
         ];
     }
 
@@ -104,5 +112,16 @@ class EnterpriseCategoryForm extends Model
 
         $res['list'] = $list;
         return $res;
+    }
+
+    public function categoryOptions() {
+        if (!$this->validate()){
+            return false;
+        }
+
+        return EnterpriseCategory::find()
+            ->where(['status' => 1])
+            ->orderBy(['sort' => SORT_DESC,'id' => SORT_DESC])
+            ->all();
     }
 }

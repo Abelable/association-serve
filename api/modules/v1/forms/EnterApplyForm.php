@@ -172,7 +172,7 @@ class EnterApplyForm extends Model
             [['page','page_size'],'integer','on'=>[static::SCENARIO_APPLY_LIST]],
 
             //列表
-            [['category_id'],'string','on'=>[static::SCENARIO_LIST]],
+            [['category_id', 'company_name'],'string','on'=>[static::SCENARIO_LIST]],
             [['page','page_size'],'integer','on'=>[static::SCENARIO_LIST]],
 
             // 查询详情信息场景
@@ -537,8 +537,11 @@ class EnterApplyForm extends Model
         }
 
         $query = FormApply::find()->where(['status' => 1]);
+        if ($this->company_name) {
+            $query = $query->andFilterWhere(['like', 'company_name', $this->company_name]);
+        }
         if ($this->category_id && $this->category_id != 0) {
-            $query->andFilterWhere(['category_id' => $this->category_id]);
+            $query = $query->andFilterWhere(['category_id' => $this->category_id]);
         }
         $offset = ($this->page - 1) * $this->page_size;
         $list = $query->orderBy(['created_at' => SORT_DESC])

@@ -340,7 +340,7 @@ class EnterApplyForm extends Model
             ->andFilterWhere(['evaluation'=>$this->evaluation])
             ->andFilterWhere(['like', 'a.company_name', $this->company_name]);
 
-        $list = $query->select(['a.number','a.url','a.certificate_status','a.logo','a.short_name','a.address','a.longitude','a.latitude','a.registration_time','a.introduction','a.evaluation','a.id','a.title','a.name','b.id as level_id','b.name as level_name','a.mobile','a.email','a.apply_content_json','a.is_deal','a.enter_from_id','a.status','a.created_at','a.updated_at','a.company_name','a.reject_mark'])
+        $list = $query->select(['a.number','a.url','a.certificate_status','a.logo','a.short_name','a.address','a.longitude','a.latitude','a.registration_time','a.introduction','a.evaluation','a.id','a.title','a.name','b.id as level_id','b.name as level_name','a.mobile','a.email','a.apply_content_json','a.is_deal','a.enter_from_id','a.status','a.created_at','a.updated_at','a.company_name','a.reject_mark', 'a.banner', 'a.category_id', 'a.main_business', 'a.address_detail', 'a.mp_app_id'])
             ->from(FormApply::tableName() . ' AS a')
             ->leftJoin(MemberLevel::tableName(). ' AS b','a.member_level = b.id')
             ->limit($this->page_size)

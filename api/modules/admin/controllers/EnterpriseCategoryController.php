@@ -36,4 +36,16 @@ class EnterpriseCategoryController extends BaseController
         }
         return  ResultHelper::json('200',"success",$res);
     }
+
+    public function actionOptions() {
+        $form = new EnterpriseCategoryForm();
+        // 设置场景
+        $form->setScenario($form::SCENARIO_ENTERPRISE_CATEGORY_OPTIONS);
+        // 加载数据
+        $form->load(\Yii::$app->request->get(),'');
+        if (!$res = $form->categoryOptions()){
+            return  ResultHelper::json('422',"保存失败",$form->errors);
+        }
+        return  ResultHelper::json('200',"success",$res);
+    }
 }
