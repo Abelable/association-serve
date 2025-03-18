@@ -28,7 +28,11 @@ use common\models\base\BaseModel;
  * @property string $number    编号
  * @property string $url    证书url
  * @property int $certificate_status 证书状态[-1:删除;0:禁用;1启用]
-
+ * @property int $category_id 分类id
+ * @property string $banner 介绍头图
+ * @property string $address_detail 地址详情
+ * @property string $main_business 主营业务
+ * @property int $mp_app_id 小程序id
  */
 class FormApply extends BaseModel
 {
@@ -73,8 +77,8 @@ class FormApply extends BaseModel
         return [
             [['member_id', 'member_level', 'is_deal', 'enter_from_id', 'status', 'created_at', 'updated_at','certificate_status','number'], 'integer'],
             [['email'], 'required'],
-            [['apply_content_json','logo','url'], 'string'],
-            [['open_id', 'title', 'name', 'email','company_name','reject_mark'], 'string', 'max' => 255],
+            [['apply_content_json','logo','url', 'banner', 'address_detail', 'main_business'], 'string'],
+            [['open_id', 'title', 'name', 'email','company_name','reject_mark', 'mp_app_id'], 'string', 'max' => 255],
             [['mobile'], 'string', 'max' => 30],
         ];
     }
@@ -100,8 +104,13 @@ class FormApply extends BaseModel
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'company_name'=>'company_name',
-            'reject_mark'=>'reject_mark'
+            'company_name'=>'Company Name',
+            'reject_mark'=>'Reject Mark',
+            'mp_app_id'=>'Mp App Id',
+            'address_detail'=>'Address Detail',
+            'banner'=>'Banner',
+            'category_id'=>'Category Id',
+            'main_business'=>'Main Business',
         ];
     }
 }

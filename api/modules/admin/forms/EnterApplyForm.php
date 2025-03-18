@@ -240,6 +240,16 @@ class EnterApplyForm extends Model
 
     public $certificate_status;
 
+    public $category_id;
+
+    public $main_business;
+
+    public $banner;
+
+    public $address_detail;
+
+    public $mp_app_id;
+
     public function rules()
     {
         return [
@@ -248,8 +258,8 @@ class EnterApplyForm extends Model
             [['name','mobile','email','title','s_time','e_time','company_name'],'string','on'=>[static::SCENARIO_LIST]],
 
             //新增编辑场景
-            [['apply_content_json'],'string','on'=>[static::SCENARIO_STORE]],
-            [['id','certificate_status'],'integer','on'=>[static::SCENARIO_STORE]],
+            [['apply_content_json', 'address_detail', 'main_business', 'banner', 'mp_app_id'],'string','on'=>[static::SCENARIO_STORE]],
+            [['id','certificate_status', 'category_id'],'integer','on'=>[static::SCENARIO_STORE]],
             [['logo','number','url'],'string','on'=>[static::SCENARIO_STORE]],
             [['address'],'string','on'=>[static::SCENARIO_STORE]],
             [['short_name'],'string','on'=>[static::SCENARIO_STORE]],
@@ -529,6 +539,11 @@ class EnterApplyForm extends Model
         $model->introduction=$this->introduction;
         $model->evaluation=$this->evaluation;
         $model->number=$this->number;
+        $model->category_id=$this->category_id ?? 0;
+        $model->main_business=$this->main_business ?? '';
+        $model->banner = $this->banner ?? '';
+        $model->address_detail = $this->address_detail ?? '';
+        $model->mp_app_id=$this->mp_app_id ?? '';
 //        $model->url=$this->url;
 //        $model->certificate_status=$this->certificate_status;
         if(!$model->save()) {
