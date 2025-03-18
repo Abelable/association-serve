@@ -61,6 +61,7 @@ class EnterpriseConsultingForm extends Model
         $info->mobile = $this->mobile;
         $info->company_name = $this->company_name;
         $info->content = $this->content;
+        $info->status = 1;
         if(!$info->save()) {
             $this->addError('open_info_save', '保存企业咨询信息异常');
             return false;
