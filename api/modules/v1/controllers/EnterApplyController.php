@@ -20,7 +20,7 @@ class EnterApplyController extends OnAuthController
      *
      * @var array
      */
-    protected $authOptional = ['list', 'apply','custom-event-detail','custom-event-apply'];
+    protected $authOptional = ['list', 'detail', 'apply', 'custom-event-detail', 'custom-event-apply'];
 
     /**
      * @param $id
