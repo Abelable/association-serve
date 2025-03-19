@@ -18,9 +18,9 @@ class IndustryForm extends Model
     const SCENARIO_INDUSTRY_LIST = 'industry_list';
 
     /**
-     * @var string 地区
+     * @var string 地区id
      */
-    public $city_name;
+    public $city_id;
 
     /**
      * @var string 核心产业
@@ -53,12 +53,13 @@ class IndustryForm extends Model
             [['page','page_size'],'integer'],
 
             // 产业添加、编辑、删除
-            [['city_name', 'main', 'top'], 'required', 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
-            [['id','status'], 'integer', 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
+            [['city_id', 'main', 'top'], 'required', 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
+            [['main', 'top'], 'string', 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
+            [['id', 'city_id', 'status'], 'integer', 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
             ['status', 'in', 'range' => [-1,0,1], 'on' => [self::SCENARIO_INDUSTRY_SAVE]],
 
             // 产业列表
-            [['city_name'], 'string', 'on' => [self::SCENARIO_INDUSTRY_LIST]],
+            [['city_id'], 'integer', 'on' => [self::SCENARIO_INDUSTRY_LIST]],
         ];
     }
 
@@ -75,7 +76,7 @@ class IndustryForm extends Model
         if(!$info) {
             $info = new Industry();
         }
-        $info->city_name = $this->city_name;
+        $info->city_id = $this->city_id;
         $info->main = $this->main;
         $info->top = $this->top;
         $info->status = $this->status;
@@ -98,8 +99,8 @@ class IndustryForm extends Model
 
         $offset = ($this->page - 1) * $this->page_size;
         $query = Industry::find()->where(['status' => 1]);
-        if ($this->city_name) {
-            $query->andFilterWhere(['like', 'city_name', $this->city_name]);
+        if ($this->city_id) {
+            $query->andFilterWhere(['like', 'city_id', $this->city_id]);
         }
         $list = $query->limit($this->page_size)
             ->offset($offset)

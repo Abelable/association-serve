@@ -16,7 +16,7 @@ class IndustryForm extends Model
     {
         return [
             // 产业带列表
-            [['city_name'],'string','on'=>[static::SCENARIO_INDUSTRY_LIST]],
+            [['city_id'],'string','on'=>[static::SCENARIO_INDUSTRY_LIST]],
         ];
     }
 

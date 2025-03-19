@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "gm_industry".
  *
  * @property int $id
- * @property string $city_name 地区
+ * @property string $city_id 地区id
  * @property string $main 核心产业
  * @property string $top 头部产业
  * @property int $status 状态：-1-删除，0-禁用；1-启用
@@ -31,7 +31,7 @@ class Industry extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['city_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['main', 'top'], 'string'],
             [['city_name'], 'string', 'max' => 255],
         ];
@@ -44,7 +44,7 @@ class Industry extends \common\models\base\BaseModel
     {
         return [
             'id' => 'ID',
-            'city_name' => 'City Name',
+            'city_id' => 'City Id',
             'main' => 'Main',
             'top' => 'Top',
             'status' => 'Status',
