@@ -12,11 +12,16 @@ class IndustryForm extends Model
      */
     const SCENARIO_INDUSTRY_LIST = 'industry_list';
 
+    /**
+     * @var int 地区id
+     */
+    public $city_id;
+
     public function rules()
     {
         return [
             // 产业带列表
-            [['city_id'],'string','on'=>[static::SCENARIO_INDUSTRY_LIST]],
+            [['city_id'],'integer','on'=>[static::SCENARIO_INDUSTRY_LIST]],
         ];
     }
 
@@ -24,6 +29,6 @@ class IndustryForm extends Model
         if (!$this->validate()) {
             return false;
         }
-        return Industry::find()->where(['status' => 1])->orderBy(['created_at' => SORT_DESC])->all();
+        return Industry::find()->where(['status' => 1])->orderBy(['id' => SORT_ASC])->all();
     }
 }
