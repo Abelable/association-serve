@@ -85,6 +85,11 @@ class LegalForm extends Model
     public $effective_time = 0;
 
     /**
+     * @var string 发布机构
+     */
+    public $effective_from;
+
+    /**
      * @var array 排序数组
      */
     public $orderBy = [];
@@ -115,7 +120,7 @@ class LegalForm extends Model
 
             //法律汇编保存
             [['title', 'image', 'content'], 'required', 'on' => [self::SCENARIO_LEGAL_SAVE]],
-            [['title', 'image', 'content'], 'string', 'on' => [self::SCENARIO_LEGAL_SAVE]],
+            [['title', 'image', 'content', 'effective_from'], 'string', 'on' => [self::SCENARIO_LEGAL_SAVE]],
             [['id','status','sort','effective_time', 'promulgation_time', 'category_id', 'sub_category_id'], 'integer', 'on' => [self::SCENARIO_LEGAL_SAVE]],
             ['status', 'in', 'range' => [-1,0,1], 'on' => [self::SCENARIO_LEGAL_SAVE]],
             ['orderBy', 'filter','filter' => function ($value) {
@@ -298,7 +303,7 @@ class LegalForm extends Model
         $model->effective_time = $this->effective_time;
         $model->promulgation_time = $this->promulgation_time;
         $model->status = $this->status;
-        $model->effective_from = $_POST['effective_from']??'';
+        $model->effective_from = $this->effective_from;
         if(!$model->save()) {
             $this->addError('category_save', '保存法律汇编异常');
             return false;

@@ -17,6 +17,7 @@ use Yii;
  * @property int $virtual_likes 虚拟点赞数
  * @property int $likes 点赞数
  * @property int $effective_time 生效时间
+ * @property string $effective_from 发布机构
  * @property int $promulgation_time 颁布时间
  * @property int $sort 排序
  * @property int $status 状态：-1-删除；0-禁用；1-启用
@@ -42,7 +43,7 @@ class Legal1 extends \common\models\base\BaseModel
     {
         return [
             [['category_id', 'sub_category_id', 'virtual_views', 'views', 'virtual_likes', 'likes', 'effective_time', 'promulgation_time', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['content'], 'string'],
+            [['effective_from', 'content'], 'string'],
             [['virtual_likes'], 'required'],
             [['title', 'image'], 'string', 'max' => 255],
         ];
@@ -66,6 +67,7 @@ class Legal1 extends \common\models\base\BaseModel
             'likes' => 'Likes',
             'effective_time' => 'Effective Time',
             'promulgation_time' => 'Promulgation Time',
+            'effective_from' => 'Effective From',
             'sort' => 'Sort',
             'status' => 'Status',
             'created_at' => 'Created At',
