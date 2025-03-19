@@ -23,7 +23,7 @@ class AlbumForm extends Model
     public $title;
 
     /**
-     * @var int 封面
+     * @var int 地区
      */
     public $city_id;
 
@@ -59,6 +59,7 @@ class AlbumForm extends Model
 
             // 公开信息列表
             [['title'], 'string', 'on' => [self::SCENARIO_ALBUM_LIST]],
+            [['city_id'], 'integer', 'on' => [self::SCENARIO_ALBUM_LIST]],
         ];
     }
 
@@ -99,7 +100,8 @@ class AlbumForm extends Model
         $offset = ($this->page - 1) * $this->page_size;
         $query = Album::find()
             ->where(['status' => 1])
-            ->andFilterWhere(['like', 'title', $this->title]);
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andWhere(['city_id' => $this->city_id]);
         $list = $query->limit($this->page_size)
             ->offset($offset)
             ->orderBy(['id' => SORT_DESC])
