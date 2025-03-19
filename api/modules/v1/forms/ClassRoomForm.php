@@ -45,6 +45,11 @@ class ClassRoomForm extends Model
     public $id;
 
     /**
+     * @var int 分类id
+     */
+    public $category_id;
+
+    /**
      * @var int 观看密码
      */
     public $password;
@@ -61,6 +66,7 @@ class ClassRoomForm extends Model
 
             //网商课堂列表
             [['title'],'string','on'=>[static::SCENARIO_CLASS_ROOM_LIST]],
+            [['category_id'],'integer','on'=>[static::SCENARIO_CLASS_ROOM_LIST]],
             //网商课堂详情
             [['id'],'required', 'on' => static::SCENARIO_CLASS_ROOM_DETAIL],
             [['id'],'integer', 'on' => static::SCENARIO_CLASS_ROOM_DETAIL],
@@ -136,7 +142,8 @@ class ClassRoomForm extends Model
                 }
             ])
             ->where(['status' => 1])
-            ->andFilterWhere(['like','title',$this->title]);
+            ->andFilterWhere(['like','title',$this->title])
+            ->andFilterWhere(['category_id'=>$this->category_id]);
         $offset = ($this->page - 1) * $this->page_size;
         $list = $query->orderBy(['sort' => SORT_DESC, 'created_at' => SORT_DESC])
             ->offset($offset)

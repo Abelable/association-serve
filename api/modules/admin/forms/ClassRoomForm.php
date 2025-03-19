@@ -87,6 +87,11 @@ class ClassRoomForm extends Model
     public $duration;
 
     /**
+     * @var string 分类id
+     */
+    public $category_id;
+
+    /**
      * @var string 作者id
      */
     public $author_id;
@@ -149,7 +154,7 @@ class ClassRoomForm extends Model
             //网商课堂添加、编辑、删除
             [['title', 'cover_img','media_url', 'author_id', 'is_try', 'tags'], 'required', 'on' => [self::SCENARIO_CLASS_ROOM_SAVE]],
             [['title', 'cover_img','media_url', 'password', 'introduction', 'tags'], 'string', 'on' => [self::SCENARIO_CLASS_ROOM_SAVE]],
-            [['id','status','is_try', 'try_time', 'sort', 'author_id', 'duration','views'], 'integer', 'on' => [self::SCENARIO_CLASS_ROOM_SAVE]],
+            [['id', 'status', 'category_id', 'is_try', 'try_time', 'sort', 'author_id', 'duration','views'], 'integer', 'on' => [self::SCENARIO_CLASS_ROOM_SAVE]],
             ['status', 'in', 'range' => [-1,0,1], 'on' => [self::SCENARIO_CLASS_ROOM_SAVE]],
 
             //网商课堂列表
@@ -207,6 +212,7 @@ class ClassRoomForm extends Model
                 ClassRoomTagMap::deleteAll(['class_room_id' => $classRoom->id, 'status' => 1]);
             }
             $classRoom->title = $this->title;
+            $classRoom->category_id = $this->category_id;
             $classRoom->author_id = $this->author_id;
             $classRoom->cover_img = $this->cover_img;
             $classRoom->media_url = $this->media_url;

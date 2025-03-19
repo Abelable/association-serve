@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title 标题
+ * @property int $category_id 分类id
  * @property int $author_id 作者id
  * @property string $cover_img 封面
  * @property string $media_url 视频地址
@@ -41,7 +42,7 @@ class ClassRoom extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['author_id', 'duration', 'is_try', 'try_time', 'sort','views', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['category_id', 'author_id', 'duration', 'is_try', 'try_time', 'sort','views', 'status', 'created_at', 'updated_at'], 'integer'],
             [['introduction'], 'string'],
             [['title', 'cover_img', 'media_url', 'password'], 'string', 'max' => 255],
         ];
@@ -54,6 +55,7 @@ class ClassRoom extends \common\models\base\BaseModel
     {
         return [
             'id' => 'ID',
+            'category_id' => 'Category ID',
             'title' => 'Title',
             'author_id' => 'Author ID',
             'cover_img' => 'Cover Img',
