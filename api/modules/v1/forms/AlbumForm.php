@@ -66,8 +66,8 @@ class AlbumForm extends Model
             $query->andFilterWhere(['city_id' => $this->city_id]);
         }
         if ($this->start_time) {
-            $query->andfilterWhere(['<','created_at',$this->start_time]);
-            $query->andfilterWhere(['>','created_at',$this->end_time]);
+            $query->andfilterWhere(['>=','created_at',$this->start_time]);
+            $query->andfilterWhere(['<=','created_at',$this->end_time]);
         }
         $offset = ($this->page - 1) * $this->page_size;
         $res['page'] = $this->page;
