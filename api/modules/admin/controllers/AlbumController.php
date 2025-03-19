@@ -20,7 +20,7 @@ class AlbumController extends BaseController
         // 加载数据
         $form->load(\Yii::$app->request->post(),'');
         if (!$res = $form->save()){
-            return  ResultHelper::json('422',$form->errors);
+            return ResultHelper::json('422',$form->errors);
         }
         return  ResultHelper::json('200',"success", []);
     }

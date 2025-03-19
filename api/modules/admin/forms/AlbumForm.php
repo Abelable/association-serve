@@ -98,10 +98,13 @@ class AlbumForm extends Model
         $res['page_size'] = $this->page_size;
 
         $offset = ($this->page - 1) * $this->page_size;
-        $query = Album::find()
-            ->where(['status' => 1])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andWhere(['city_id' => $this->city_id]);
+        $query = Album::find()->where(['status' => 1]);
+        if ($this->title) {
+            $query->andFilterWhere(['like', 'title', $this->title]);
+        }
+        if ($this->city_id) {
+            $query->andFilterWhere(['city_id' => $this->city_id]);
+        }
         $list = $query->limit($this->page_size)
             ->offset($offset)
             ->orderBy(['id' => SORT_DESC])

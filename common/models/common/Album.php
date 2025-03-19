@@ -31,9 +31,9 @@ class Album extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['virtual_views', 'views', 'virtual_likes', 'likes', 'collects', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['content'], 'string'],
-            [['title', 'cover'], 'string', 'max' => 255],
+            [['city_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['photo_list'], 'string'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
