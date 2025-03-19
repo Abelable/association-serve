@@ -33,7 +33,6 @@ class Industry extends \common\models\base\BaseModel
         return [
             [['city_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['main', 'top'], 'string'],
-            [['city_name'], 'string', 'max' => 255],
         ];
     }
 
