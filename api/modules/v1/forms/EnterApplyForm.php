@@ -553,7 +553,7 @@ class EnterApplyForm extends Model
             $query = $query->andFilterWhere(['category_id' => $this->category_id]);
         }
         $offset = ($this->page - 1) * $this->page_size;
-        $list = $query->orderBy(['created_at' => SORT_DESC])
+        $list = $query->orderBy(['member_level' => SORT_DESC, 'created_at' => SORT_DESC])
             ->offset($offset)
             ->limit($this->page_size)
             ->all();
