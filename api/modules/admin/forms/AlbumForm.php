@@ -82,8 +82,8 @@ class AlbumForm extends Model
             $info = new Album();
         }
         $info->title = $this->title;
-        $info->date = $this->date;
         $info->city_id = $this->city_id;
+        $info->date = $this->date;
         $info->photo_list = $this->photo_list;
         $info->status = $this->status;
         if(!$info->save()) {
