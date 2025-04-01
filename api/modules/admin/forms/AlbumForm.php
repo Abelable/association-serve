@@ -23,6 +23,11 @@ class AlbumForm extends Model
     public $title;
 
     /**
+     * @var string 时间
+     */
+    public $date;
+
+    /**
      * @var int 地区
      */
     public $city_id;
@@ -53,12 +58,12 @@ class AlbumForm extends Model
             [['page','page_size'],'integer'],
 
             // 公开信息添加、编辑、删除
-            [['title', 'city_id', 'photo_list'], 'required', 'on' => [self::SCENARIO_ALBUM_SAVE]],
+            [['title', 'date', 'city_id', 'photo_list'], 'required', 'on' => [self::SCENARIO_ALBUM_SAVE]],
             [['id','status'], 'integer', 'on' => [self::SCENARIO_ALBUM_SAVE]],
             ['status', 'in', 'range' => [-1,0,1], 'on' => [self::SCENARIO_ALBUM_SAVE]],
 
             // 公开信息列表
-            [['title'], 'string', 'on' => [self::SCENARIO_ALBUM_LIST]],
+            [['title', 'date'], 'string', 'on' => [self::SCENARIO_ALBUM_LIST]],
             [['city_id'], 'integer', 'on' => [self::SCENARIO_ALBUM_LIST]],
         ];
     }
@@ -77,6 +82,7 @@ class AlbumForm extends Model
             $info = new Album();
         }
         $info->title = $this->title;
+        $info->date = $this->date;
         $info->city_id = $this->city_id;
         $info->photo_list = $this->photo_list;
         $info->status = $this->status;

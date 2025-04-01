@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title 标题
+ * @property string $date 时间
  * @property string $city_id 地区
  * @property string $photo_list 照片
  * @property int $status 状态：-1-删除，0-禁用；1-启用
@@ -33,7 +34,7 @@ class Album extends \common\models\base\BaseModel
         return [
             [['city_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['photo_list'], 'string'],
-            [['title'], 'string', 'max' => 255],
+            [['title', 'date'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,6 +46,7 @@ class Album extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'title' => 'Title',
+            'date' => 'Date',
             'city_id' => 'City ID',
             'photo_list' => 'Photo List',
             'status' => 'Status',
