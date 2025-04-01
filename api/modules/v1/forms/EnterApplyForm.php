@@ -477,16 +477,21 @@ class EnterApplyForm extends Model
             $this->addError("EnterFrom",'活动不存在');
             return false;
         }
-        if($customEvent->start_time > time()) {
-            $this->addError("EnterFrom",'活动未开始');
-            return false;
-        }
-        if($customEvent->end_time < time()) {
-            $this->addError("EnterFrom",'活动已结束');
-            return false;
-        }
 
         $res = $customEvent->toArray();
+        if($customEvent->start_time > time()) {
+            return [
+                'title' => $res['title'],
+                'EnterFrom' => ['活动未开始'],
+            ];
+        }
+        if($customEvent->end_time < time()) {
+            return [
+                'title' => $res['title'],
+                'EnterFrom' => ['活动已结束'],
+            ];
+        }
+
         $res['enter_from_json'] = json_decode($res['enter_from_json'],true);
 
         return $res;
